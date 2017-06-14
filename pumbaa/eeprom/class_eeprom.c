@@ -17,11 +17,6 @@ static void class_eeprom_print(const mp_print_t *print_p,
 static mp_obj_t class_eeprom_write(mp_uint_t n_args,
                                    const mp_obj_t *args_p)
 {
-    if(n_args < 4 || n_args > 5 ) 
-    {
-            nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                               "wrong number of arguments given to eeprom_write(device, address, buffer, (optional) size)"));        
-    }
     struct class_eeprom_t *self_p = MP_OBJ_TO_PTR(args_p[0]);
     mp_buffer_info_t buffer_info;
     int device, addr, size;
@@ -58,11 +53,6 @@ static mp_obj_t class_eeprom_write(mp_uint_t n_args,
 //called as .read(device, addr, size)     
 static mp_obj_t class_eeprom_read(mp_uint_t n_args, const mp_obj_t *args_p)
 {
-    if(n_args != 4 ) 
-    {
-        nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
-                                   "wrong number of arguments given to eeprom_read(device,address,size)"));
-    }
     int device, addr, size ; 
     device = mp_obj_get_int(args_p[1]);
     if(device < 0 || device > 7 ) 
@@ -87,8 +77,8 @@ static mp_obj_t class_eeprom_read(mp_uint_t n_args, const mp_obj_t *args_p)
     }
     return (mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr));
 }
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_eeprom_write_obj, 2, 3, class_eeprom_write);
-static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_eeprom_read_obj, 2, 3, class_eeprom_read);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_eeprom_write_obj, 4, 5, class_eeprom_write);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(class_eeprom_read_obj, 4, 4, class_eeprom_read);
 static const mp_rom_map_elem_t class_eeprom_locals_dict_table[] = {
     /* Instance methods. */
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&class_eeprom_write_obj) },
@@ -132,9 +122,7 @@ static mp_obj_t class_eeprom_make_new(const mp_obj_type_t *type_p,
                                            "bad pin for sda"));
     }
     
-    
     baudrate = args[2].u_int; 
-    printf("module initialized with scl = %d, sda =%d, baud = %d\n", pin_scl, pin_sda, baudrate);
     if( eeprom_init(&self_p->drv, &pin_device[pin_scl], &pin_device[pin_sda], baudrate, 50000, 100) != 0 )
     {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,

@@ -1,7 +1,3 @@
-
-//#ifdef HO_STOP_CALM_BAIATU
-
-
 #include "simba.h"
 struct eeprom_soft_driver_t i2c;
 
@@ -168,7 +164,6 @@ static int stop_cond(struct eeprom_soft_driver_t *self_p)
 
     /*
     if (wait_for_clock_stretching_end(self_p) != 0) {
-        printf("stop_cond: crapat ceva clock strecthing \n");
         return (-1);
     }*/
 
@@ -181,7 +176,6 @@ static int stop_cond(struct eeprom_soft_driver_t *self_p)
 
     /* Make sure no device is pulling SDA low. */
     if (pin_device_read(self_p->sda_p) == 0) {
-        printf("stop_cond: crapat ceva device read \n");
         return (-1);
     }
 
@@ -209,7 +203,6 @@ static int write_byte(struct eeprom_soft_driver_t *self_p,
             return (-1);
         }
     }
-    //printf("ack bit was %d on write \n", nack ) ; 
     return (nack);
 
 }
@@ -227,7 +220,6 @@ static int read_byte(struct eeprom_soft_driver_t *self_p,
     *byte_p = 0;
     pin_device_set_mode(self_p->sda_p, PIN_INPUT);
     time_busy_wait_us(self_p->baudrate_us);
-    //pin_device_set_mode(self_p->scl_p, PIN_INPUT);
     for (i = 0; i < 8; i++) {
         if (read_bit(self_p, &bit) != 0) {
             return (-1);
@@ -272,7 +264,6 @@ int eeprom_write_buf(struct eeprom_soft_driver_t *self_p,int device, int addr, c
 
     for(i = addr; i < addr + size ; i ++ ) 
     {
-        printf("writing byte %d at %d\n", i - addr, i);
         if( i == addr || i % EEPROM_PAGE_DIM == 0 )
         {
             //new page 
@@ -284,7 +275,6 @@ int eeprom_write_buf(struct eeprom_soft_driver_t *self_p,int device, int addr, c
             //poll the write eeprom write cycle 
             while(1)
             {
-                printf("write cycle polling\n");
                 if(start_cond(self_p) == 0 
                    && write_byte(self_p, EEPROM_BYTE_WRITE | (device << 1),1 ) == 0)
                     break ; 
@@ -305,7 +295,6 @@ int eeprom_read_buf(struct eeprom_soft_driver_t *self_p, int device, int addr, c
     int i;
     for(i = addr ; i < addr + size ; i ++ ) 
     {
-        printf("reading byte %d at %d\n", i - addr, i);
         if( i == addr || i % EEPROM_PAGE_DIM == 0 )
         {
             if(i > addr ) 
@@ -317,7 +306,6 @@ int eeprom_read_buf(struct eeprom_soft_driver_t *self_p, int device, int addr, c
                 //poll the eeprom write cycle 
                 while(1) 
                 {
-                    printf("read cycle polling\n");
                     if(start_cond(self_p) == 0 
                         && write_byte(self_p, EEPROM_BYTE_WRITE | (device << 1), 1) == 0)
                         break; 
@@ -347,4 +335,3 @@ int eeprom_module_init()
     return 0;
     
 }
-//#endif 
