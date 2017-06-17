@@ -5,7 +5,7 @@
 
 struct class_eeprom_t {
     mp_obj_base_t base;
-    struct eeprom_soft_driver_t drv;
+    struct i2c_soft_driver_t drv;
 };
 extern const mp_obj_type_t module_drivers_class_eeprom;
 #endif

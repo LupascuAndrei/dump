@@ -42,7 +42,7 @@ static mp_obj_t class_eeprom_write(mp_uint_t n_args,
         size = buffer_info.len;
     }
     //int eeprom_write_buf(struct eeprom_soft_driver_t *self_p, int addr, char *buf, int size, int device)
-    if(eeprom_write_buf (&self_p->drv, device, addr, buffer_info.buf, size)  != 0 )
+    if(eeprom_i2c_write_buf (&self_p->drv, device, addr, buffer_info.buf, size)  != 0 )
     {        
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "eeprom_write() failed"));      
@@ -70,7 +70,7 @@ static mp_obj_t class_eeprom_read(mp_uint_t n_args, const mp_obj_t *args_p)
     struct class_eeprom_t *self_p = MP_OBJ_TO_PTR(args_p[0]);
     vstr_t vstr;
     vstr_init_len(&vstr, size);
-    if(eeprom_read_buf (&self_p->drv, device, addr, vstr.buf, size)  != 0 )
+    if(eeprom_i2c_read_buf (&self_p->drv, device, addr, vstr.buf, size)  != 0 )
     {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                    "eeprom_read() failed"));     
@@ -123,7 +123,7 @@ static mp_obj_t class_eeprom_make_new(const mp_obj_type_t *type_p,
     }
     
     baudrate = args[2].u_int; 
-    if( eeprom_init(&self_p->drv, &pin_device[pin_scl], &pin_device[pin_sda], baudrate, 50000, 100) != 0 )
+    if( eeprom_i2c_init(&self_p->drv, &pin_device[pin_scl], &pin_device[pin_sda], baudrate, 50000, 100) != 0 )
     {
         nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError,
                                            "eeprom_init() failed"));        
