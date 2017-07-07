@@ -1,0 +1,63 @@
+I (224) boot: Loading app partition at offset 00010000
+I (759) boot: segment 0: paddr=0x00010018 vaddr=0x00000000 size=0x0ffe8 ( 65512)
+I (760) boot: segment 1: paddr=0x00020008 vaddr=0x3f400010 size=0x094e8 ( 38120) map
+I (776) boot: segment 2: paddr=0x000294f8 vaddr=0x3ffb0000 size=0x0343c ( 13372) load
+I (808) boot: segment 3: paddr=0x0002c93c vaddr=0x40080000 size=0x00400 (  1024) load
+I (829) boot: segment 4: paddr=0x0002cd44 vaddr=0x40080400 size=0x123f0 ( 74736) load
+I (890) boot: segment 5: paddr=0x0003f13c vaddr=0x400c0000 size=0x00000 (     0) load
+I (891) boot: segment 6: paddr=0x0003f144 vaddr=0x00000000 size=0x00ec4 (  3780)
+I (913) boot: segment 7: paddr=0x00040010 vaddr=0x400d0018 size=0x2a4e0 (173280) map
+I (980) esp_core_dump: Init core dump to UART
+Hello from simba !
+clk tick: 0
+clk tick: 1
+clk tick: 2
+clk tick: 3
+clk tick: 4
+clk tick: 5
+clk tick: 6
+clk tick: 7
+clk tick: 8
+clk tick: 9
+clk tick: 10
+clk tick: 11
+clk tick: 12
+clk tick: 13
+clk tick: 14
+clk tick: 15
+clk tick: 16
+clk tick: 17
+clk tick: 18
+clk tick: 19
+clk tick: 20
+clk tick: 21
+clk tick: 22
+clk tick: 23
+clk tick: 24
+clk tick: 25
+clk tick: 26
+clk tick: 27
+clk tick: 28
+clk tick: 29
+clk tick: 30
+clk tick: 31
+clk tick: 32
+clk tick: 33
+clk tick: 34
+clk tick: 35
+clk tick: 36
+clk tick: 37
+clk tick: 38
+clk tick: 39
+clk tick: 40
+clk tick: 41
+clk tick: 42
+clk tick: 43
+clk tick: 44
+clk tick: 45
+clk tick: 46
+clk tick: 47
+clk tick: 48
+clk tick: 49
+clk tick: 50
+
